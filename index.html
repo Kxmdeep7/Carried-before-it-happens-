@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Almost</title>
+    <title>For You</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         
         body { 
-            background: #fdfaf5; /* Soft Silk Cream */
+            background: #1b261d; /* Deep Garden Green */
             overflow: hidden; 
-            font-family: 'Cormorant Garamond', serif; 
-            transition: background 5s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Dancing Script', cursive; 
+            transition: background 6s ease-in-out;
         }
 
         #main-container {
@@ -22,70 +22,45 @@
             text-align: center; position: relative;
         }
 
-        /* ORGANIC NATURE ELEMENTS */
+        /* DENSE PETAL STORM */
         .nature-layer {
             position: absolute; width: 100%; height: 100%;
             pointer-events: none; z-index: 1;
         }
 
-        .leaf, .petal {
-            position: absolute;
-            opacity: 0.5;
-            animation: flutter 15s linear infinite;
-        }
-
-        .leaf {
-            width: 18px; height: 10px;
-            background: #8fa18e; /* Sage Green */
-            border-radius: 0 100% 0 100%;
-        }
-
         .petal {
-            width: 14px; height: 14px;
-            background: #f2d5d5; /* Dusty Rose */
+            position: absolute;
+            background: #f2d5d5; /* Sakura Pink */
             border-radius: 100% 0 100% 100%;
+            opacity: 0.6;
+            animation: fall linear infinite;
         }
 
-        @keyframes flutter {
-            0% { transform: translate(-10vw, -10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translate(110vw, 110vh) rotate(540deg); opacity: 0; }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(110vh) translateX(100px) rotate(720deg); opacity: 0; }
         }
 
-        /* TEXT LAYERS: THE APPEALING REVEAL */
+        /* HANDWRITTEN TEXT REVEAL */
         .text-layer {
             position: absolute; width: 85%;
-            font-size: 1.7rem; letter-spacing: 4px; font-weight: 300;
-            color: #2a2a2a; opacity: 0;
-            transform: translateY(20px) scale(0.98);
-            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), 
-                        transform 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        color 3s ease;
+            font-size: 1.8rem; 
+            color: #f8f6f2; /* Soft White */
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 2.5s ease-in-out, transform 3s ease-in-out;
             z-index: 10;
+            line-height: 1.6;
         }
 
-        .visible { opacity: 1 !important; transform: translateY(0) scale(1) !important; }
-
-        /* THE TENSION POINTS */
-        #glow-wrap {
-            position: absolute; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 3s ease;
-        }
-
-        .glow {
-            width: 5px; height: 5px; background: #fff; border-radius: 50%;
-            box-shadow: 0 0 15px #fff, 0 0 30px rgba(255,255,255,0.5);
-            position: absolute;
-            transition: transform 6s cubic-bezier(0.1, 0, 0.2, 1);
-        }
+        .visible { opacity: 1 !important; transform: scale(1) !important; }
 
         #footnote {
-            position: absolute; bottom: 10%; font-size: 0.75rem;
-            letter-spacing: 6px; color: rgba(255,255,255,0.4);
-            opacity: 0; transition: opacity 2s ease;
-            text-transform: uppercase;
+            position: absolute; bottom: 10%; font-size: 1rem;
+            letter-spacing: 2px; color: rgba(255,255,255,0.3);
+            opacity: 0; transition: opacity 3s ease;
         }
     </style>
 </head>
@@ -95,102 +70,75 @@
 
     <div id="main-container">
         <div class="text-layer" id="s1">
-            If the wind feels softer today…<br>
-            <span style="font-size: 1.2rem; font-style: italic; opacity: 0.7;">it’s carrying a piece of me.</span>
+            Bas tuasi aa yaad rakhna...<br>
+            You are the only thought in my mind,<br>
+            from morning to the night,<br>
+            in every moment, in every second.
+        </div>
+
+        <div class="text-layer" id="s2">
+            It isn't just about a moment.<br>
+            It's the pull before it...<br>
+            The silence where everything is felt.
         </div>
 
         <div class="text-layer" id="s3">
-            <div id="l1" style="margin-bottom:12px; opacity:0; transition:1.2s;">It isn’t about the moment.</div>
-            <div id="l2" style="margin-bottom:12px; opacity:0; transition:1.2s;">It’s about the <i>pull</i> before it.</div>
-            <div id="l3" style="margin-bottom:12px; opacity:0; transition:1.2s;">The heavy silence.</div>
-            <div id="l4" style="opacity:0; transition:1.2s;">The unsaid electricity.</div>
+            Some things don’t need to be said<br>
+            to be real.<br>
+            <span style="font-size: 1.3rem; opacity: 0.8;">I'm right here.</span>
         </div>
 
-        <div id="glow-wrap">
-            <div class="glow" id="g1" style="transform: translateX(-100px);"></div>
-            <div class="glow" id="g2" style="transform: translateX(100px);"></div>
-        </div>
-
-        <div class="text-layer" id="s5">
-            Some things are felt best<br>
-            when they are left untouched.
-        </div>
-
-        <div id="footnote">Keep breathing.</div>
+        <div id="footnote">Just feel it...</div>
     </div>
 
     <script>
-        // Continuous Nature Flow
-        function spawnNature() {
-            const natureBox = document.getElementById('nature-box');
-            const div = document.createElement('div');
-            div.className = Math.random() > 0.5 ? 'leaf' : 'petal';
-            div.style.left = Math.random() * 100 + "vw";
-            div.style.top = "-5vh";
-            div.style.animationDuration = (Math.random() * 5 + 10) + "s";
-            natureBox.appendChild(div);
-            setTimeout(() => div.remove(), 15000);
+        // Create 50+ Petals for a "Flower Animation" feel
+        const natureBox = document.getElementById('nature-box');
+        function createPetal() {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            const size = Math.random() * 15 + 10 + "px";
+            p.style.width = size;
+            p.style.height = size;
+            p.style.left = Math.random() * 100 + "vw";
+            p.style.animationDuration = (Math.random() * 8 + 7) + "s";
+            p.style.backgroundColor = Math.random() > 0.5 ? '#f2d5d5' : '#fff0f3';
+            natureBox.appendChild(p);
+            setTimeout(() => p.remove(), 15000);
         }
-        setInterval(spawnNature, 800);
+        setInterval(createPetal, 300); // High frequency
 
-        const body = document.body;
         const s1 = document.getElementById('s1');
+        const s2 = document.getElementById('s2');
         const s3 = document.getElementById('s3');
-        const s5 = document.getElementById('s5');
-        const glowWrap = document.getElementById('glow-wrap');
-        const g1 = document.getElementById('g1');
-        const g2 = document.getElementById('g2');
         const footnote = document.getElementById('footnote');
 
         window.onload = () => {
-            // Sequence starts
-            setTimeout(() => { s1.classList.add('visible'); }, 1200);
-            setTimeout(() => { s1.classList.remove('visible'); }, 5500);
+            // SLOW PACING: Give her time to breathe
+            
+            // Show Message 1
+            setTimeout(() => { s1.classList.add('visible'); }, 2000);
+            
+            // Transition Background to Midnight halfway through
+            setTimeout(() => { 
+                document.body.style.background = "#090a0f"; 
+                s1.classList.remove('visible');
+            }, 9000);
 
-            // Shift to Midnight
-            setTimeout(() => {
-                body.style.background = "#0d0e11"; 
-            }, 6000);
+            // Show Message 2
+            setTimeout(() => { s2.classList.add('visible'); }, 11000);
+            setTimeout(() => { s2.classList.remove('visible'); }, 18000);
 
-            // The Almost (Immersive Reveal)
-            setTimeout(() => {
-                s3.style.opacity = "1";
-                s3.style.color = "#fff";
-                setTimeout(() => { document.getElementById('l1').style.opacity = "1"; }, 500);
-                setTimeout(() => { document.getElementById('l2').style.opacity = "1"; }, 2000);
-                setTimeout(() => { document.getElementById('l3').style.opacity = "1"; }, 3500);
-                setTimeout(() => { document.getElementById('l4').style.opacity = "1"; }, 5000);
-            }, 7500);
-
-            // The Tension Points
-            setTimeout(() => {
-                s3.style.opacity = "0";
-                setTimeout(() => {
-                    glowWrap.style.opacity = "1";
-                    setTimeout(() => {
-                        g1.style.transform = "translateX(-8px)";
-                        g2.style.transform = "translateX(8px)";
-                    }, 500);
-                }, 2000);
-            }, 15000);
-
-            // Final Text
-            setTimeout(() => {
-                glowWrap.style.opacity = "0";
-                setTimeout(() => {
-                    s5.style.color = "#fff";
-                    s5.classList.add('visible');
-                }, 1500);
-            }, 22000);
-
-            // THE ENDLESS LOOP
-            setTimeout(() => {
-                s5.classList.remove('visible');
-                // The background stays black, nature keeps falling forever
+            // Show Message 3
+            setTimeout(() => { s3.classList.add('visible'); }, 20000);
+            
+            // Fade text out but KEEP PETALS GOING
+            setTimeout(() => { 
+                s3.classList.remove('visible');
                 setTimeout(() => {
                     footnote.style.opacity = "1";
-                }, 2000);
-            }, 28000);
+                }, 3000);
+            }, 27000);
         };
     </script>
 </body>
