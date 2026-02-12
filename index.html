@@ -13,93 +13,66 @@
             background: #f8f6f2; 
             overflow: hidden; 
             font-family: 'Cormorant Garamond', serif; 
-            transition: background 7s ease-in-out;
+            transition: background 3s ease-in-out;
         }
 
         #main-container {
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
+            height: 100vh; width: 100vw;
+            display: flex; justify-content: center; align-items: center;
+            text-align: center; position: relative;
+        }
+
+        /* NATURE ELEMENTS (Emojis for authenticity) */
+        .nature {
+            position: absolute;
+            font-size: 20px;
+            z-index: 1;
+            user-select: none;
+            animation: drift 8s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(-10vw, -10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translate(110vw, 50vh) rotate(360deg); opacity: 0; }
         }
 
         /* TEXT STYLING */
         .text-layer {
-            position: absolute;
-            width: 80%;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            line-height: 2;
-            color: #2a2a2a;
-            opacity: 0;
-            transition: opacity 2s ease-in-out, color 4s ease;
+            position: absolute; width: 85%;
+            font-size: 1.5rem; letter-spacing: 2px; line-height: 2;
+            color: #2a2a2a; opacity: 0;
+            transition: opacity 1.5s ease-in-out, color 2s ease;
+            z-index: 10;
         }
 
-        /* SCENE 1 LEAVES */
-        .leaf {
-            position: absolute;
-            width: 15px;
-            height: 8px;
-            background: rgba(42, 42, 42, 0.1);
-            border-radius: 0 100% 0 100%;
-            z-index: 1;
-            animation: drift 12s linear infinite;
-        }
-
-        @keyframes drift {
-            0% { transform: translate(-10vw, 0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translate(110vw, 20vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* SCENE 4 PARTICLES */
         #particle-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: none;
-            justify-content: center;
-            align-items: center;
+            position: absolute; width: 100%; height: 100%;
+            display: none; justify-content: center; align-items: center;
             z-index: 5;
         }
 
         .particle {
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            filter: blur(1px);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            position: absolute;
-            transition: all 8s cubic-bezier(0.2, 0, 0.3, 1);
+            font-size: 30px; position: absolute;
+            transition: all 4s cubic-bezier(0.2, 0, 0.3, 1);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
         }
 
-        #p1 { transform: translateX(-40px); }
-        #p2 { transform: translateX(40px); }
-
-        /* FINAL FOOTNOTE */
         #footnote {
-            position: absolute;
-            bottom: 5%;
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            opacity: 0;
-            transition: opacity 1.5s ease;
-            color: rgba(255,255,255,0.4);
+            position: absolute; bottom: 8%; font-size: 0.8rem;
+            letter-spacing: 4px; opacity: 0; transition: opacity 1s ease;
+            color: rgba(255,255,255,0.5);
         }
-
     </style>
 </head>
 <body>
 
     <div id="main-container">
-        <div class="leaf" style="top: 20%; animation-delay: 0s;"></div>
-        <div class="leaf" style="top: 50%; animation-delay: 4s;"></div>
-        <div class="leaf" style="top: 80%; animation-delay: 8s;"></div>
+        <div class="nature" style="top: 10%; animation-delay: 0s;">🌸</div>
+        <div class="nature" style="top: 30%; animation-delay: 2s;">🌿</div>
+        <div class="nature" style="top: 60%; animation-delay: 4s;">🌸</div>
+        <div class="nature" style="top: 80%; animation-delay: 1s;">🍃</div>
 
         <div class="text-layer" id="s1">
             If the wind feels softer today…<br>
@@ -107,19 +80,19 @@
         </div>
 
         <div class="text-layer" id="s3">
-            <span id="l1" class="text-layer" style="position:relative; display:block;">It’s not the kiss.</span>
-            <span id="l2" class="text-layer" style="position:relative; display:block;">It’s the pause before it.</span>
-            <span id="l3" class="text-layer" style="position:relative; display:block;">The silence.</span>
-            <span id="l4" class="text-layer" style="position:relative; display:block;">The electricity.</span>
+            <span id="l1" style="display:block; opacity:0; transition: 1s;">It’s not the moment.</span>
+            <span id="l2" style="display:block; opacity:0; transition: 1s;">It’s the breath before it.</span>
+            <span id="l3" style="display:block; opacity:0; transition: 1s;">The silence.</span>
+            <span id="l4" style="display:block; opacity:0; transition: 1s;">The electricity.</span>
         </div>
 
         <div id="particle-container">
-            <div class="particle" id="p1"></div>
-            <div class="particle" id="p2"></div>
+            <div class="particle" id="p1" style="transform: translateX(-60px);">✨</div>
+            <div class="particle" id="p2" style="transform: translateX(60px);">✨</div>
         </div>
 
         <div class="text-layer" id="s5">
-            Some moments don’t need to happen…<br>
+            Some moments don’t need to be spoken…<br>
             to be felt.
         </div>
 
@@ -136,64 +109,58 @@
         const p2 = document.getElementById('p2');
         const footnote = document.getElementById('footnote');
 
-        // TIMING ENGINE
         window.onload = () => {
-            // Scene 1: Wind + Text
-            setTimeout(() => { s1.style.opacity = "1"; }, 4000);
-            setTimeout(() => { s1.style.opacity = "0"; }, 8000);
+            // Speeding up the sequence
+            setTimeout(() => { s1.style.opacity = "1"; }, 1500);
+            setTimeout(() => { s1.style.opacity = "0"; }, 5000);
 
-            // Scene 2: Background Transition
+            // Faster transition to Dusk Blue
             setTimeout(() => {
-                body.style.background = "linear-gradient(180deg, #df916d 0%, #9e5b4a 40%, #4a214d 70%, #12122b 100%)";
-            }, 9000);
+                body.style.background = "#1a1a2e"; // Deep Night Blue
+                document.querySelectorAll('.nature').forEach(el => el.style.opacity = "0.3");
+            }, 5500);
 
-            // Scene 3: The Almost (Line by Line)
+            // Scene 3: The Almost (Tightened pauses)
             setTimeout(() => {
                 s3.style.opacity = "1";
                 s3.style.color = "#fff";
                 
-                const lines = ['l1', 'l2', 'l3', 'l4'];
-                const delays = [0, 2000, 5000, 7000]; // Precise pauses from your outline
-                
-                lines.forEach((id, i) => {
-                    setTimeout(() => { document.getElementById(id).style.opacity = "1"; }, delays[i]);
-                });
-            }, 16000);
+                setTimeout(() => { document.getElementById('l1').style.opacity = "1"; }, 500);
+                setTimeout(() => { document.getElementById('l2').style.opacity = "1"; }, 2000);
+                setTimeout(() => { document.getElementById('l3').style.opacity = "1"; }, 3500);
+                setTimeout(() => { document.getElementById('l4').style.opacity = "1"; }, 5000);
+            }, 6500);
 
-            // Scene 4: The Particles (The Tension)
+            // Scene 4: The Glow
             setTimeout(() => {
                 s3.style.opacity = "0";
                 setTimeout(() => {
                     particles.style.display = "flex";
-                    // Particles move toward each other but stop
                     setTimeout(() => {
-                        p1.style.transform = "translateX(-4px)";
-                        p2.style.transform = "translateX(4px)";
-                    }, 500);
-                }, 2000);
-            }, 27000);
+                        p1.style.transform = "translateX(-8px)";
+                        p2.style.transform = "translateX(8px)";
+                    }, 100);
+                }, 1500);
+            }, 14000);
 
-            // Scene 5: Final Impact
+            // Final Message
             setTimeout(() => {
                 particles.style.opacity = "0";
                 setTimeout(() => {
                     s5.style.color = "#fff";
                     s5.style.opacity = "1";
-                }, 2000);
-            }, 36000);
+                }, 1500);
+            }, 20000);
 
-            // Final Release
+            // Fade to Black
             setTimeout(() => {
                 s5.style.opacity = "0";
-                body.style.transition = "background 3s ease";
                 body.style.background = "#000";
                 setTimeout(() => {
                     footnote.style.opacity = "1";
-                    setTimeout(() => { footnote.style.opacity = "0"; }, 2500);
-                }, 1500);
-            }, 43000);
+                }, 1000);
+            }, 26000);
         };
     </script>
 </body>
 </html>
-
