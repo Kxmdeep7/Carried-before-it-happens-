@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Almost</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+        
+        body { 
+            background: #f8f6f2; 
+            overflow: hidden; 
+            font-family: 'Cormorant Garamond', serif; 
+            transition: background 7s ease-in-out;
+        }
+
+        #main-container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* TEXT STYLING */
+        .text-layer {
+            position: absolute;
+            width: 80%;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            line-height: 2;
+            color: #2a2a2a;
+            opacity: 0;
+            transition: opacity 2s ease-in-out, color 4s ease;
+        }
+
+        /* SCENE 1 LEAVES */
+        .leaf {
+            position: absolute;
+            width: 15px;
+            height: 8px;
+            background: rgba(42, 42, 42, 0.1);
+            border-radius: 0 100% 0 100%;
+            z-index: 1;
+            animation: drift 12s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(-10vw, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translate(110vw, 20vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* SCENE 4 PARTICLES */
+        #particle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .particle {
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            position: absolute;
+            transition: all 8s cubic-bezier(0.2, 0, 0.3, 1);
+        }
+
+        #p1 { transform: translateX(-40px); }
+        #p2 { transform: translateX(40px); }
+
+        /* FINAL FOOTNOTE */
+        #footnote {
+            position: absolute;
+            bottom: 5%;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            color: rgba(255,255,255,0.4);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="main-container">
+        <div class="leaf" style="top: 20%; animation-delay: 0s;"></div>
+        <div class="leaf" style="top: 50%; animation-delay: 4s;"></div>
+        <div class="leaf" style="top: 80%; animation-delay: 8s;"></div>
+
+        <div class="text-layer" id="s1">
+            If the wind feels softer today…<br>
+            maybe it’s carrying something from me.
+        </div>
+
+        <div class="text-layer" id="s3">
+            <span id="l1" class="text-layer" style="position:relative; display:block;">It’s not the kiss.</span>
+            <span id="l2" class="text-layer" style="position:relative; display:block;">It’s the pause before it.</span>
+            <span id="l3" class="text-layer" style="position:relative; display:block;">The silence.</span>
+            <span id="l4" class="text-layer" style="position:relative; display:block;">The electricity.</span>
+        </div>
+
+        <div id="particle-container">
+            <div class="particle" id="p1"></div>
+            <div class="particle" id="p2"></div>
+        </div>
+
+        <div class="text-layer" id="s5">
+            Some moments don’t need to happen…<br>
+            to be felt.
+        </div>
+
+        <div id="footnote">Just feel it.</div>
+    </div>
+
+    <script>
+        const body = document.body;
+        const s1 = document.getElementById('s1');
+        const s3 = document.getElementById('s3');
+        const s5 = document.getElementById('s5');
+        const particles = document.getElementById('particle-container');
+        const p1 = document.getElementById('p1');
+        const p2 = document.getElementById('p2');
+        const footnote = document.getElementById('footnote');
+
+        // TIMING ENGINE
+        window.onload = () => {
+            // Scene 1: Wind + Text
+            setTimeout(() => { s1.style.opacity = "1"; }, 4000);
+            setTimeout(() => { s1.style.opacity = "0"; }, 8000);
+
+            // Scene 2: Background Transition
+            setTimeout(() => {
+                body.style.background = "linear-gradient(180deg, #df916d 0%, #9e5b4a 40%, #4a214d 70%, #12122b 100%)";
+            }, 9000);
+
+            // Scene 3: The Almost (Line by Line)
+            setTimeout(() => {
+                s3.style.opacity = "1";
+                s3.style.color = "#fff";
+                
+                const lines = ['l1', 'l2', 'l3', 'l4'];
+                const delays = [0, 2000, 5000, 7000]; // Precise pauses from your outline
+                
+                lines.forEach((id, i) => {
+                    setTimeout(() => { document.getElementById(id).style.opacity = "1"; }, delays[i]);
+                });
+            }, 16000);
+
+            // Scene 4: The Particles (The Tension)
+            setTimeout(() => {
+                s3.style.opacity = "0";
+                setTimeout(() => {
+                    particles.style.display = "flex";
+                    // Particles move toward each other but stop
+                    setTimeout(() => {
+                        p1.style.transform = "translateX(-4px)";
+                        p2.style.transform = "translateX(4px)";
+                    }, 500);
+                }, 2000);
+            }, 27000);
+
+            // Scene 5: Final Impact
+            setTimeout(() => {
+                particles.style.opacity = "0";
+                setTimeout(() => {
+                    s5.style.color = "#fff";
+                    s5.style.opacity = "1";
+                }, 2000);
+            }, 36000);
+
+            // Final Release
+            setTimeout(() => {
+                s5.style.opacity = "0";
+                body.style.transition = "background 3s ease";
+                body.style.background = "#000";
+                setTimeout(() => {
+                    footnote.style.opacity = "1";
+                    setTimeout(() => { footnote.style.opacity = "0"; }, 2500);
+                }, 1500);
+            }, 43000);
+        };
+    </script>
+</body>
+</html>
+
