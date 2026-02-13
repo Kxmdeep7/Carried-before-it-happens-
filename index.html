@@ -10,10 +10,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         
         body { 
-            background: radial-gradient(circle at center, #1b261d 0%, #0d140e 100%);
+            background: #1b261d; 
             overflow: hidden; 
             font-family: 'Dancing Script', cursive; 
-            transition: background 8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background 6s ease-in-out;
         }
 
         #main-container {
@@ -22,7 +22,7 @@
             text-align: center; position: relative;
         }
 
-        /* VIBRANT OMNIDIRECTIONAL NATURE */
+        /* PETAL SHOWER */
         .petal, .leaf {
             position: absolute; opacity: 0; pointer-events: none; z-index: 1;
         }
@@ -34,65 +34,58 @@
         .leaf {
             width: 16px; height: 10px; background: #4a6d4a;
             border-radius: 0 100% 0 100%;
-            box-shadow: 0 0 5px rgba(74, 109, 74, 0.4);
         }
 
-        @keyframes omniWind {
-            0% { transform: translate(var(--startX), var(--startY)) rotate(0deg); opacity: 0; }
+        @keyframes shower {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             20% { opacity: 0.8; }
-            100% { transform: translate(var(--endX), var(--endY)) rotate(720deg); opacity: 0; }
+            100% { transform: translateY(110vh) translateX(100px) rotate(720deg); opacity: 0; }
         }
 
-        /* TEXT LAYOUT: CENTERED & IMMERSIVE */
+        /* TEXT LAYOUT */
         .text-layer {
             position: absolute; width: 90%; 
             top: 45%; left: 50%; transform: translate(-50%, -50%);
             font-size: 2.2rem; color: #fdfaf5; opacity: 0;
-            transition: opacity 2.5s ease, filter 2.5s ease;
+            transition: opacity 2.5s ease;
             z-index: 10; line-height: 1.8; visibility: hidden;
-            filter: blur(12px);
+        }
+        .visible { opacity: 1 !important; visibility: visible !important; }
+
+        /* SUNSET VISUAL */
+        .sunset-glow {
+            position: absolute; bottom: 0; width: 100%; height: 40vh;
+            background: linear-gradient(to top, #ff7e5f 0%, #feb47b 30%, rgba(0,0,0,0) 100%);
+            opacity: 0; transition: opacity 8s ease; z-index: 2;
         }
 
-        .visible { opacity: 1 !important; visibility: visible !important; filter: blur(0px) !important; }
-
-        /* THE FINAL SCENE: MOONLIGHT SANCTUARY */
-        .moonlight {
-            position: absolute; width: 150%; height: 150%;
-            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%);
-            opacity: 0; transition: opacity 6s ease; pointer-events: none;
-        }
-
+        /* THE FINAL SCENE */
         #nature-scene {
             position: absolute; width: 100%; height: 100%;
             pointer-events: none; z-index: 5;
         }
-
         .branch-svg {
-            position: absolute; bottom: 10%; right: -15px;
-            width: 360px; height: auto; opacity: 0;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.9));
-            transition: opacity 5s ease;
+            position: absolute; bottom: 12%; right: -15px;
+            width: 340px; opacity: 0; transition: opacity 5s ease;
         }
-
         .bird-svg {
-            position: absolute; width: 50px; fill: #ffffff; opacity: 0;
+            position: absolute; width: 45px; fill: #fff; opacity: 0;
             transition: all 9s cubic-bezier(0.2, 1, 0.3, 1);
-            filter: drop-shadow(0 0 12px rgba(255,255,255,0.9));
+            filter: drop-shadow(0 0 10px white);
         }
 
-        /* Start positions */
-        #b1 { top: -15%; left: -15%; }
-        #b2 { bottom: -15%; left: 115%; }
+        #b1 { top: -10%; left: -10%; }
+        #b2 { bottom: -10%; left: 110%; }
 
-        /* Real perch logic (Physical landing on branch twig) */
-        .landed-1 { top: calc(90% - 138px) !important; left: calc(100% - 200px) !important; opacity: 1 !important; transform: rotate(-5deg); }
-        .landed-2 { top: calc(90% - 142px) !important; left: calc(100% - 150px) !important; opacity: 1 !important; transform: scaleX(-1) rotate(5deg); }
+        /* Perching on branch */
+        .landed-1 { top: calc(88% - 135px) !important; left: calc(100% - 190px) !important; opacity: 1 !important; }
+        .landed-2 { top: calc(88% - 140px) !important; left: calc(100% - 145px) !important; opacity: 1 !important; transform: scaleX(-1); }
 
     </style>
 </head>
 <body>
 
-    <div class="moonlight" id="moon"></div>
+    <div class="sunset-glow" id="sunset"></div>
 
     <div id="main-container">
         <div class="text-layer" id="p1">
@@ -110,11 +103,7 @@
             <svg class="branch-svg" id="branch" viewBox="0 0 200 120">
                 <path d="M200,105 C170,95 140,115 100,100 C60,85 30,90 0,75" stroke="#1a1108" stroke-width="8" fill="none" stroke-linecap="round"/>
                 <path d="M140,105 C135,75 125,65 110,60" stroke="#1a1108" stroke-width="5" fill="none" stroke-linecap="round"/>
-                <path d="M135,80 C155,70 170,68 180,70" stroke="#1a1108" stroke-width="3" fill="none" stroke-linecap="round"/>
-                <circle cx="110" cy="60" r="2" fill="#3a5a3a" />
-                <circle cx="180" cy="70" r="1.5" fill="#3a5a3a" />
             </svg>
-
             <svg id="b1" class="bird-svg" viewBox="0 0 24 24">
                 <path d="M21,12C21,12 18,5 11,5C10,5 5,7 3,11C2,13 3,15 5,16C4,17 3,18 2,19C5,19 7,17 8,16C11,17 21,12 21,12Z" />
             </svg>
@@ -125,68 +114,55 @@
     </div>
 
     <script>
-        // Turbulent All-Screen Nature Flow
-        function spawnNature() {
-            const isPetal = Math.random() > 0.4;
-            const p = document.createElement('div');
-            p.className = isPetal ? 'petal' : 'leaf';
-            
-            const startX = Math.random() * 140 - 20 + "vw";
-            const startY = Math.random() * 140 - 20 + "vh";
-            const endX = Math.random() * 140 - 20 + "vw";
-            const endY = Math.random() * 140 - 20 + "vh";
-
-            p.style.setProperty('--startX', startX);
-            p.style.setProperty('--startY', startY);
-            p.style.setProperty('--endX', endX);
-            p.style.setProperty('--endY', endY);
-
-            p.style.animation = `omniWind ${Math.random() * 8 + 10}s linear forwards`;
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 18000);
+        let showerInterval;
+        function startShower() {
+            showerInterval = setInterval(() => {
+                const p = document.createElement('div');
+                p.className = Math.random() > 0.4 ? 'petal' : 'leaf';
+                p.style.left = Math.random() * 100 + "vw";
+                p.style.animation = `shower ${Math.random() * 5 + 6}s linear forwards`;
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 11000);
+            }, 200);
         }
-        setInterval(spawnNature, 180);
 
         window.onload = () => {
             const p1 = document.getElementById('p1');
             const p2 = document.getElementById('p2');
-            const moon = document.getElementById('moon');
             const branch = document.getElementById('branch');
             const b1 = document.getElementById('b1');
             const b2 = document.getElementById('b2');
+            const sunset = document.getElementById('sunset');
 
-            // Part 1: Initial Reveal
-            setTimeout(() => { p1.classList.add('visible'); }, 2000);
+            // 1. Text Appears First
+            setTimeout(() => { p1.classList.add('visible'); }, 1500);
+
+            // 2. Then Petal Shower Starts
+            setTimeout(() => { startShower(); }, 3500);
             
-            // Fade P1 and Transition to Midnight
+            // 3. Fade into Page 2 Theme (Dusk/Dark)
             setTimeout(() => { 
                 p1.classList.remove('visible');
-                document.body.style.background = "#000000"; 
+                document.body.style.background = "#070b08"; 
             }, 9000);
 
-            // Part 2: The Heart of the Day
+            // 4. Page 2 Text
             setTimeout(() => { p2.classList.add('visible'); }, 11000);
 
-            // Clear space for the birds
-            setTimeout(() => { p2.classList.remove('visible'); }, 19000);
-
-            // Part 3: The Sanctuary (The Real Real Landing)
+            // 5. Final Page: Sunset & Birds
             setTimeout(() => { 
-                moon.style.opacity = "1";
+                p2.classList.remove('visible');
+                sunset.style.opacity = "1";
                 branch.style.opacity = "1";
                 
-                // Birds sweep in
-                b1.style.opacity = "0.9"; b1.style.left = "30vw"; b1.style.top = "15%";
-                b2.style.opacity = "0.9"; b2.style.left = "70vw"; b2.style.top = "65%";
+                b1.style.opacity = "1"; b1.style.left = "30vw"; b1.style.top = "15%";
+                b2.style.opacity = "1"; b2.style.left = "70vw"; b2.style.top = "60%";
                 
-                // Sequenced Landing (Partner finds partner)
                 setTimeout(() => {
                     b1.classList.add('landed-1');
-                    setTimeout(() => {
-                        b2.classList.add('landed-2');
-                    }, 1200);
+                    setTimeout(() => { b2.classList.add('landed-2'); }, 1200);
                 }, 4000);
-            }, 20500);
+            }, 19000);
         };
     </script>
 </body>
