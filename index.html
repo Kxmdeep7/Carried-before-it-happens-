@@ -22,17 +22,18 @@
             text-align: center; position: relative;
         }
 
-        /* VIBRANT NATURE ELEMENTS */
+        /* VIBRANT FLOWING NATURE */
+        .petal, .leaf {
+            position: absolute; opacity: 0; pointer-events: none; z-index: 1;
+        }
         .petal {
-            position: absolute; width: 14px; height: 14px;
-            background: #ff8fa3; border-radius: 100% 0 100% 100%;
-            opacity: 0; pointer-events: none; z-index: 1;
-            box-shadow: 0 0 5px rgba(255, 143, 163, 0.6);
+            width: 14px; height: 14px; background: #ff8fa3;
+            border-radius: 100% 0 100% 100%;
+            box-shadow: 0 0 8px rgba(255, 143, 163, 0.5);
         }
         .leaf {
-            position: absolute; width: 16px; height: 10px;
-            background: #5a825a; border-radius: 0 100% 0 100%;
-            opacity: 0; pointer-events: none; z-index: 1;
+            width: 16px; height: 10px; background: #4a6d4a;
+            border-radius: 0 100% 0 100%;
         }
 
         @keyframes omniWind {
@@ -41,43 +42,42 @@
             100% { transform: translate(var(--endX), var(--endY)) rotate(720deg); opacity: 0; }
         }
 
-        /* TEXT LAYOUT */
+        /* CENTERED HANDWRITTEN TEXT */
         .text-layer {
             position: absolute; width: 90%; 
             top: 45%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 1.9rem; color: #fdfaf5; opacity: 0;
+            font-size: 2rem; color: #fdfaf5; opacity: 0;
             transition: opacity 2.5s ease, filter 2.5s ease;
             z-index: 10; line-height: 1.8; visibility: hidden;
-            filter: blur(8px);
+            filter: blur(10px);
         }
-
         .visible { opacity: 1 !important; visibility: visible !important; filter: blur(0px) !important; }
 
-        /* THE FINAL SCENE */
+        /* CINEMATIC BIRD & BRANCH */
         #nature-scene {
             position: absolute; width: 100%; height: 100%;
             pointer-events: none; z-index: 5;
         }
 
         .branch-svg {
-            position: absolute; bottom: 12%; right: -10px;
-            width: 320px; height: auto; opacity: 0;
-            transition: opacity 4s ease;
+            position: absolute; bottom: 8%; right: -20px;
+            width: 350px; opacity: 0;
+            transition: opacity 5s ease;
         }
 
         .bird-svg {
-            position: absolute; width: 48px; height: auto; 
-            fill: #fff; opacity: 0;
-            transition: all 8s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.8));
+            position: absolute; width: 50px; fill: #ffffff; opacity: 0;
+            transition: all 10s cubic-bezier(0.19, 1, 0.22, 1);
+            filter: drop-shadow(0 0 12px rgba(255,255,255,0.7));
         }
 
-        #b1 { top: -60px; left: -60px; }
-        #b2 { bottom: -60px; left: 110vw; }
+        /* Flight Start */
+        #b1 { top: -10%; left: -10%; }
+        #b2 { bottom: -10%; left: 110%; }
 
-        /* Exact Perch Alignment */
-        .perched-1 { top: calc(88% - 145px) !important; left: calc(100% - 195px) !important; opacity: 1 !important; transform: rotate(-3deg); }
-        .perched-2 { top: calc(88% - 150px) !important; left: calc(100% - 155px) !important; opacity: 1 !important; transform: scaleX(-1) rotate(3deg); }
+        /* REAL LANDING: Locked to branch coordinates */
+        .landed-1 { top: calc(92% - 158px) !important; left: calc(100% - 210px) !important; opacity: 1 !important; transform: rotate(-5deg); }
+        .landed-2 { top: calc(92% - 162px) !important; left: calc(100% - 165px) !important; opacity: 1 !important; transform: scaleX(-1) rotate(5deg); }
 
     </style>
 </head>
@@ -98,9 +98,10 @@
 
         <div id="nature-scene">
             <svg class="branch-svg" id="branch" viewBox="0 0 200 120">
-                <path d="M200,100 C170,90 140,110 100,95 C60,80 30,85 0,70" stroke="#1a1108" stroke-width="7" fill="none" stroke-linecap="round"/>
-                <path d="M140,100 C135,70 120,60 100,55" stroke="#1a1108" stroke-width="4" fill="none" stroke-linecap="round"/>
-                <circle cx="100" cy="55" r="1.5" fill="#1a1108"/>
+                <path d="M200,105 C170,95 140,115 100,100 C60,85 30,90 0,75" stroke="#140d05" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M140,105 C135,75 120,65 100,60" stroke="#140d05" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M135,80 C155,70 170,65 180,68" stroke="#140d05" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <circle cx="100" cy="60" r="1.5" fill="#140d05"/>
             </svg>
 
             <svg id="b1" class="bird-svg" viewBox="0 0 24 24">
@@ -132,7 +133,7 @@
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 18000);
         }
-        setInterval(spawnNature, 200);
+        setInterval(spawnNature, 180);
 
         window.onload = () => {
             const p1 = document.getElementById('p1');
@@ -141,35 +142,35 @@
             const b1 = document.getElementById('b1');
             const b2 = document.getElementById('b2');
 
-            // Show P1
+            // Part 1
             setTimeout(() => { p1.classList.add('visible'); }, 2000);
             
-            // Shift to Midnight Forest
+            // Transition to Deep Midnight
             setTimeout(() => { 
                 p1.classList.remove('visible');
-                document.body.style.background = "radial-gradient(circle at center, #070b08 0%, #000000 100%)"; 
+                document.body.style.background = "radial-gradient(circle at center, #050806 0%, #000000 100%)"; 
             }, 9000);
 
-            // Show P2
+            // Part 2
             setTimeout(() => { p2.classList.add('visible'); }, 11500);
 
-            // Clear for Bird Animation
+            // Clear for the birds
             setTimeout(() => { 
                 p2.classList.remove('visible');
             }, 20000);
 
-            // The Bird Reunion
+            // Part 3: The Climax
             setTimeout(() => { 
                 branch.style.opacity = "1";
-                // Fly-in phase
-                b1.style.opacity = "0.9"; b1.style.left = "40vw"; b1.style.top = "25%";
-                b2.style.opacity = "0.9"; b2.style.left = "55vw"; b2.style.top = "55%";
+                // High visibility flight
+                b1.style.opacity = "1"; b1.style.left = "40vw"; b1.style.top = "20%";
+                b2.style.opacity = "1"; b2.style.left = "50vw"; b2.style.top = "60%";
                 
-                // Landing phase
+                // They land together on the branch
                 setTimeout(() => {
-                    b1.classList.add('perched-1');
-                    b2.classList.add('perched-2');
-                }, 4500);
+                    b1.classList.add('landed-1');
+                    b2.classList.add('landed-2');
+                }, 4000);
             }, 21500);
         };
     </script>
