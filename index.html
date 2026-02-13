@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         
         body { 
-            background: #1b261d; /* Deep Garden Green */
+            background: #1b261d; 
             overflow: hidden; 
             font-family: 'Dancing Script', cursive; 
             transition: background 6s ease-in-out;
@@ -22,84 +22,78 @@
             text-align: center; position: relative;
         }
 
-        /* WHIRLPOOL WIND PETALS */
+        /* OMNIDIRECTIONAL WIND */
         .petal {
             position: absolute; width: 12px; height: 12px;
-            background: #f2d5d5; border-radius: 100% 0 100% 100%;
-            opacity: 0.5; pointer-events: none; z-index: 1;
-            animation: whirlpool 12s linear forwards;
+            background: #f2e1e1; border-radius: 100% 0 100% 100%;
+            opacity: 0; pointer-events: none; z-index: 1;
         }
 
-        @keyframes whirlpool {
-            0% { transform: translate(-10vw, -10vh) rotate(0deg); opacity: 0; }
-            30% { transform: translate(40vw, 30vh) rotate(180deg); opacity: 0.6; }
-            50% { transform: translate(50vw, 40vh) rotate(540deg); } /* The "Whirl" mid-screen */
-            100% { transform: translate(110vw, 110vh) rotate(1080deg); opacity: 0; }
+        @keyframes omniWind {
+            0% { transform: translate(var(--startX), var(--startY)) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            100% { transform: translate(var(--endX), var(--endY)) rotate(720deg); opacity: 0; }
         }
 
-        /* IMMERSIVE TEXT */
+        /* TEXT PAGES (1 & 2 ONLY) */
         .text-layer {
-            position: absolute; width: 85%; font-size: 1.8rem; 
-            color: #f8f6f2; opacity: 0; transform: translateY(30px);
-            transition: opacity 2s ease, transform 2s ease;
+            position: absolute; width: 85%; font-size: 2.1rem; 
+            color: #f8f6f2; opacity: 0; transform: translateY(20px);
+            transition: opacity 2.5s ease, transform 2.5s ease;
             z-index: 10; line-height: 1.6; visibility: hidden;
         }
 
         .visible { opacity: 1 !important; transform: translateY(0) !important; visibility: visible !important; }
 
-        /* REAL BRANCH & BIRD ANIMATION */
+        /* BIRD & BRANCH (DEDICATED PAGE 3) */
         #nature-scene {
-            position: absolute; bottom: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 5;
         }
 
         .tree-branch {
-            position: absolute; bottom: -20px; right: -20px;
-            width: 300px; height: auto; opacity: 0;
-            transition: opacity 3s ease;
+            position: absolute; bottom: 15%; right: 5%;
+            width: 280px; opacity: 0;
+            transition: opacity 4s ease;
         }
 
         .bird-svg {
-            position: absolute; width: 30px; height: auto; fill: #000;
-            transition: all 7s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            position: absolute; width: 55px; height: auto; 
+            fill: #ffffff; /* Forced pure white */
             opacity: 0;
+            transition: all 9s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 12px rgba(255,255,255,0.8)); /* Strong glow for visibility */
         }
 
-        /* Flying flight paths */
-        #b1 { top: 20%; left: -100px; }
-        #b2 { top: 35%; left: -100px; }
+        /* Start off-screen */
+        #b1 { top: -100px; left: -100px; }
+        #b2 { bottom: -100px; left: 110vw; }
 
-        /* Final resting positions on SVG branch */
-        .landed-1 { top: calc(100vh - 120px) !important; left: calc(100vw - 160px) !important; opacity: 1 !important; transform: rotate(-5deg); }
-        .landed-2 { top: calc(100vh - 125px) !important; left: calc(100vw - 120px) !important; opacity: 1 !important; transform: rotate(5deg) scaleX(-1); }
+        /* Final Landing (Page 3) */
+        .landed-1 { top: calc(85% - 95px) !important; left: calc(95% - 180px) !important; opacity: 1 !important; }
+        .landed-2 { top: calc(85% - 100px) !important; left: calc(95% - 120px) !important; opacity: 1 !important; transform: scaleX(-1); }
 
     </style>
 </head>
 <body>
 
     <div id="main-container">
-        <div class="text-layer" id="s1">
+        <div class="text-layer" id="p1">
             As the day winds down,<br>
-            know that you are the only thought in my mind...<br>
+            know that you are the only thought in my heart...<br>
             from morning until the night.
         </div>
 
-        <div class="text-layer" id="s2">
+        <div class="text-layer" id="p2">
             It isn't just about a moment.<br>
             It is the pull before it...<br>
             where everything is felt without a word.
         </div>
 
-        <div class="text-layer" id="s3">
-            Some moments are best<br>
-            when shared in silence.<br>
-            <span style="font-size: 1.2rem;">I'm right here with you.</span>
-        </div>
-
         <div id="nature-scene">
             <svg class="tree-branch" id="branch-svg" viewBox="0 0 200 100">
-                <path d="M200,90 Q150,80 100,85 T0,70" stroke="#1a1108" stroke-width="6" fill="none" stroke-linecap="round"/>
-                <path d="M140,83 Q130,60 110,55" stroke="#1a1108" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M200,85 Q160,75 110,80 T0,65" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.7"/>
+                <path d="M160,80 Q150,55 130,50" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.6"/>
             </svg>
 
             <svg id="b1" class="bird-svg" viewBox="0 0 20 20">
@@ -112,57 +106,62 @@
     </div>
 
     <script>
-        // Petal Whirlpool Spawning
         function spawnPetal() {
             const p = document.createElement('div');
             p.className = 'petal';
-            p.style.left = Math.random() * 100 + "vw";
-            p.style.top = Math.random() * -20 + "vh";
-            p.style.animationDuration = (Math.random() * 5 + 10) + "s";
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 12000);
-        }
-        setInterval(spawnPetal, 250);
+            
+            // Randomize directions for all-screen flow
+            const startX = Math.random() * 120 - 10 + "vw";
+            const startY = Math.random() * 120 - 10 + "vh";
+            const endX = Math.random() * 120 - 10 + "vw";
+            const endY = Math.random() * 120 - 10 + "vh";
 
-        const s1 = document.getElementById('s1');
-        const s2 = document.getElementById('s2');
-        const s3 = document.getElementById('s3');
-        const branch = document.getElementById('branch-svg');
-        const b1 = document.getElementById('b1');
-        const b2 = document.getElementById('b2');
+            p.style.setProperty('--startX', startX);
+            p.style.setProperty('--startY', startY);
+            p.style.setProperty('--endX', endX);
+            p.style.setProperty('--endY', endY);
+
+            p.style.animation = `omniWind ${Math.random() * 10 + 10}s linear forwards`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 20000);
+        }
+        setInterval(spawnPetal, 200);
 
         window.onload = () => {
-            // Scene 1 Appear
-            setTimeout(() => { s1.classList.add('visible'); }, 1500);
+            const p1 = document.getElementById('p1');
+            const p2 = document.getElementById('p2');
+            const branch = document.getElementById('branch-svg');
+            const b1 = document.getElementById('b1');
+            const b2 = document.getElementById('b2');
+
+            // Page 1
+            setTimeout(() => { p1.classList.add('visible'); }, 2000);
             
-            // Birds start moving through the background
-            setTimeout(() => {
-                b1.style.opacity = "0.4"; b1.style.left = "50vw"; b1.style.top = "20%";
-                b2.style.opacity = "0.4"; b2.style.left = "45vw"; b2.style.top = "30%";
-            }, 3000);
-
-            // Clear Scene 1, Background Shift
+            // Transition Background
             setTimeout(() => { 
-                s1.classList.remove('visible');
-                document.body.style.background = "#090a0f"; 
-            }, 8500);
+                p1.classList.remove('visible');
+                document.body.style.background = "#050608"; 
+            }, 9000);
 
-            // Scene 2 Appear
-            setTimeout(() => { s2.classList.add('visible'); }, 10500);
+            // Page 2
+            setTimeout(() => { p2.classList.add('visible'); }, 11000);
 
-            // Transition to Final Scene (The Landing)
+            // Clear Page 2 for Page 3 (Birds Only)
             setTimeout(() => { 
-                s2.classList.remove('visible');
+                p2.classList.remove('visible');
+            }, 19000);
+
+            // Page 3: The Birds
+            setTimeout(() => { 
                 branch.style.opacity = "1";
+                b1.style.opacity = "0.9"; b1.style.left = "40vw"; b1.style.top = "20%";
+                b2.style.opacity = "0.9"; b2.style.left = "50vw"; b2.style.top = "30%";
                 
-                // Birds fly to settle on the branch
-                b1.classList.add('landed-1');
-                b2.classList.add('landed-2');
-                b1.style.fill = "#fff"; b2.style.fill = "#fff"; // Turn white in the moonlight
-            }, 18000);
-
-            // Final Message
-            setTimeout(() => { s3.classList.add('visible'); }, 22000);
+                setTimeout(() => {
+                    b1.classList.add('landed-1');
+                    b2.classList.add('landed-2');
+                }, 5000);
+            }, 20000);
         };
     </script>
 </body>
