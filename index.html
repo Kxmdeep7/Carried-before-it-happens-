@@ -22,59 +22,77 @@
             text-align: center; position: relative;
         }
 
-        /* VIBRANT NATURE ELEMENTS */
+        /* VIBRANT OMNIDIRECTIONAL NATURE */
+        .petal, .leaf {
+            position: absolute; opacity: 0; pointer-events: none; z-index: 1;
+        }
         .petal {
-            position: absolute; width: 14px; height: 14px;
-            background: #ff8fa3; border-radius: 100% 0 100% 100%;
-            opacity: 0; pointer-events: none; z-index: 1;
-            box-shadow: 0 0 10px rgba(255, 143, 163, 0.8);
+            width: 14px; height: 14px; background: #ff8fa3;
+            border-radius: 100% 0 100% 100%;
+            box-shadow: 0 0 10px rgba(255, 143, 163, 0.7);
+        }
+        .leaf {
+            width: 16px; height: 10px; background: #4a6d4a;
+            border-radius: 0 100% 0 100%;
+            box-shadow: 0 0 5px rgba(74, 109, 74, 0.4);
         }
 
         @keyframes omniWind {
             0% { transform: translate(var(--startX), var(--startY)) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.9; }
+            20% { opacity: 0.8; }
             100% { transform: translate(var(--endX), var(--endY)) rotate(720deg); opacity: 0; }
         }
 
-        /* TEXT REVEAL */
+        /* TEXT LAYOUT: CENTERED & IMMERSIVE */
         .text-layer {
             position: absolute; width: 90%; 
+            top: 45%; left: 50%; transform: translate(-50%, -50%);
             font-size: 2.2rem; color: #fdfaf5; opacity: 0;
-            transition: opacity 3s ease, filter 3s ease;
+            transition: opacity 2.5s ease, filter 2.5s ease;
             z-index: 10; line-height: 1.8; visibility: hidden;
-            filter: blur(15px);
+            filter: blur(12px);
         }
 
         .visible { opacity: 1 !important; visibility: visible !important; filter: blur(0px) !important; }
 
-        /* REAL BRANCH & BIRD SCENE */
+        /* THE FINAL SCENE: MOONLIGHT SANCTUARY */
+        .moonlight {
+            position: absolute; width: 150%; height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%);
+            opacity: 0; transition: opacity 6s ease; pointer-events: none;
+        }
+
         #nature-scene {
             position: absolute; width: 100%; height: 100%;
             pointer-events: none; z-index: 5;
         }
 
         .branch-svg {
-            position: absolute; bottom: 10%; right: -20px;
-            width: 380px; opacity: 0;
+            position: absolute; bottom: 10%; right: -15px;
+            width: 360px; height: auto; opacity: 0;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.9));
             transition: opacity 5s ease;
         }
 
         .bird-svg {
-            position: absolute; width: 55px; fill: #ffffff; opacity: 0;
-            transition: all 10s cubic-bezier(0.19, 1, 0.22, 1);
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.9));
+            position: absolute; width: 50px; fill: #ffffff; opacity: 0;
+            transition: all 9s cubic-bezier(0.2, 1, 0.3, 1);
+            filter: drop-shadow(0 0 12px rgba(255,255,255,0.9));
         }
 
-        #b1 { top: -20%; left: -20%; }
-        #b2 { bottom: -20%; left: 120%; }
+        /* Start positions */
+        #b1 { top: -15%; left: -15%; }
+        #b2 { bottom: -15%; left: 115%; }
 
-        /* PERCHING LOGIC */
-        .perched-1 { top: calc(90% - 158px) !important; left: calc(100% - 220px) !important; opacity: 1 !important; transform: rotate(-5deg); }
-        .perched-2 { top: calc(90% - 162px) !important; left: calc(100% - 175px) !important; opacity: 1 !important; transform: scaleX(-1) rotate(5deg); }
+        /* Real perch logic (Physical landing on branch twig) */
+        .landed-1 { top: calc(90% - 138px) !important; left: calc(100% - 200px) !important; opacity: 1 !important; transform: rotate(-5deg); }
+        .landed-2 { top: calc(90% - 142px) !important; left: calc(100% - 150px) !important; opacity: 1 !important; transform: scaleX(-1) rotate(5deg); }
 
     </style>
 </head>
 <body>
+
+    <div class="moonlight" id="moon"></div>
 
     <div id="main-container">
         <div class="text-layer" id="p1">
@@ -84,13 +102,17 @@
 
         <div class="text-layer" id="p2">
             Some moments don’t need to happen…<br>
-            to be felt.
+            to be felt.<br>
+            <span style="font-size: 1.4rem; opacity: 0.7;">Just feel it.</span>
         </div>
 
         <div id="nature-scene">
             <svg class="branch-svg" id="branch" viewBox="0 0 200 120">
-                <path d="M200,105 C170,95 140,115 100,100 C60,85 30,90 0,75" stroke="#140d05" stroke-width="8" fill="none" stroke-linecap="round"/>
-                <path d="M140,105 C135,75 120,65 100,60" stroke="#140d05" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M200,105 C170,95 140,115 100,100 C60,85 30,90 0,75" stroke="#1a1108" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M140,105 C135,75 125,65 110,60" stroke="#1a1108" stroke-width="5" fill="none" stroke-linecap="round"/>
+                <path d="M135,80 C155,70 170,68 180,70" stroke="#1a1108" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <circle cx="110" cy="60" r="2" fill="#3a5a3a" />
+                <circle cx="180" cy="70" r="1.5" fill="#3a5a3a" />
             </svg>
 
             <svg id="b1" class="bird-svg" viewBox="0 0 24 24">
@@ -103,13 +125,16 @@
     </div>
 
     <script>
-        function spawnPetal() {
+        // Turbulent All-Screen Nature Flow
+        function spawnNature() {
+            const isPetal = Math.random() > 0.4;
             const p = document.createElement('div');
-            p.className = 'petal';
-            const startX = Math.random() * 120 - 10 + "vw";
-            const startY = Math.random() * 120 - 10 + "vh";
-            const endX = Math.random() * 120 - 10 + "vw";
-            const endY = Math.random() * 120 - 10 + "vh";
+            p.className = isPetal ? 'petal' : 'leaf';
+            
+            const startX = Math.random() * 140 - 20 + "vw";
+            const startY = Math.random() * 140 - 20 + "vh";
+            const endX = Math.random() * 140 - 20 + "vw";
+            const endY = Math.random() * 140 - 20 + "vh";
 
             p.style.setProperty('--startX', startX);
             p.style.setProperty('--startY', startY);
@@ -120,41 +145,48 @@
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 18000);
         }
-        setInterval(spawnPetal, 150);
+        setInterval(spawnNature, 180);
 
         window.onload = () => {
             const p1 = document.getElementById('p1');
             const p2 = document.getElementById('p2');
+            const moon = document.getElementById('moon');
             const branch = document.getElementById('branch');
             const b1 = document.getElementById('b1');
             const b2 = document.getElementById('b2');
 
-            // Part 1: First Thought
+            // Part 1: Initial Reveal
             setTimeout(() => { p1.classList.add('visible'); }, 2000);
             
-            // Fade P1 and Go Darker
+            // Fade P1 and Transition to Midnight
             setTimeout(() => { 
                 p1.classList.remove('visible');
                 document.body.style.background = "#000000"; 
-            }, 8000);
+            }, 9000);
 
-            // Part 2: The Feeling
-            setTimeout(() => { p2.classList.add('visible'); }, 10000);
+            // Part 2: The Heart of the Day
+            setTimeout(() => { p2.classList.add('visible'); }, 11000);
 
-            // Clear for the Birds
-            setTimeout(() => { p2.classList.remove('visible'); }, 17000);
+            // Clear space for the birds
+            setTimeout(() => { p2.classList.remove('visible'); }, 19000);
 
-            // Part 3: The Real Birds Landing
+            // Part 3: The Sanctuary (The Real Real Landing)
             setTimeout(() => { 
+                moon.style.opacity = "1";
                 branch.style.opacity = "1";
-                b1.style.opacity = "1"; b1.style.left = "35vw"; b1.style.top = "20%";
-                b2.style.opacity = "1"; b2.style.left = "55vw"; b2.style.top = "60%";
                 
+                // Birds sweep in
+                b1.style.opacity = "0.9"; b1.style.left = "30vw"; b1.style.top = "15%";
+                b2.style.opacity = "0.9"; b2.style.left = "70vw"; b2.style.top = "65%";
+                
+                // Sequenced Landing (Partner finds partner)
                 setTimeout(() => {
-                    b1.classList.add('perched-1');
-                    b2.classList.add('perched-2');
+                    b1.classList.add('landed-1');
+                    setTimeout(() => {
+                        b2.classList.add('landed-2');
+                    }, 1200);
                 }, 4000);
-            }, 18500);
+            }, 20500);
         };
     </script>
 </body>
