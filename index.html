@@ -10,10 +10,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         
         body { 
-            background: #1b261d; 
+            background: #1b261d; /* Deep Garden Green */
             overflow: hidden; 
             font-family: 'Dancing Script', cursive; 
-            transition: background 8s ease-in-out;
+            transition: background 6s ease-in-out;
         }
 
         #main-container {
@@ -22,56 +22,56 @@
             text-align: center; position: relative;
         }
 
-        /* WIND-BLOWN PETALS (Full Screen Coverage) */
+        /* WHIRLPOOL WIND PETALS */
         .petal {
-            position: absolute;
-            background: #f2d5d5;
-            border-radius: 100% 0 100% 100%;
-            opacity: 0.6;
-            pointer-events: none;
-            z-index: 1;
+            position: absolute; width: 12px; height: 12px;
+            background: #f2d5d5; border-radius: 100% 0 100% 100%;
+            opacity: 0.5; pointer-events: none; z-index: 1;
+            animation: whirlpool 12s linear forwards;
         }
 
-        @keyframes windFlow {
+        @keyframes whirlpool {
             0% { transform: translate(-10vw, -10vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.6; }
-            80% { opacity: 0.6; }
-            100% { transform: translate(110vw, 110vh) rotate(720deg); opacity: 0; }
+            30% { transform: translate(40vw, 30vh) rotate(180deg); opacity: 0.6; }
+            50% { transform: translate(50vw, 40vh) rotate(540deg); } /* The "Whirl" mid-screen */
+            100% { transform: translate(110vw, 110vh) rotate(1080deg); opacity: 0; }
         }
 
-        /* TEXT STYLING */
+        /* IMMERSIVE TEXT */
         .text-layer {
             position: absolute; width: 85%; font-size: 1.8rem; 
-            color: #f8f6f2; opacity: 0;
-            transition: opacity 2.5s ease-in-out;
-            z-index: 10; line-height: 1.6;
+            color: #f8f6f2; opacity: 0; transform: translateY(30px);
+            transition: opacity 2s ease, transform 2s ease;
+            z-index: 10; line-height: 1.6; visibility: hidden;
         }
 
-        .visible { opacity: 1 !important; }
+        .visible { opacity: 1 !important; transform: translateY(0) !important; visibility: visible !important; }
 
-        /* TREE & BIRD STORY */
+        /* REAL BRANCH & BIRD ANIMATION */
         #nature-scene {
-            position: absolute; bottom: 0; width: 100%; height: 300px;
-            z-index: 5; opacity: 0; transition: opacity 4s ease;
+            position: absolute; bottom: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5;
         }
 
-        .branch {
-            position: absolute; bottom: 50px; right: -20px;
-            width: 250px; height: 10px; background: #2a1b0a;
-            border-radius: 5px; transform: rotate(-5deg);
+        .tree-branch {
+            position: absolute; bottom: -20px; right: -20px;
+            width: 300px; height: auto; opacity: 0;
+            transition: opacity 3s ease;
         }
 
-        .bird {
-            position: absolute; font-size: 24px; transition: all 6s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 6;
+        .bird-svg {
+            position: absolute; width: 30px; height: auto; fill: #000;
+            transition: all 7s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            opacity: 0;
         }
 
-        #bird1 { top: 20%; left: -50px; }
-        #bird2 { top: 30%; left: -50px; }
+        /* Flying flight paths */
+        #b1 { top: 20%; left: -100px; }
+        #b2 { top: 35%; left: -100px; }
 
-        /* Resting positions on branch */
-        .rest1 { top: calc(100vh - 115px) !important; left: calc(100vw - 120px) !important; transform: rotate(0deg); }
-        .rest2 { top: calc(100vh - 115px) !important; left: calc(100vw - 90px) !important; transform: rotate(0deg) scaleX(-1); }
+        /* Final resting positions on SVG branch */
+        .landed-1 { top: calc(100vh - 120px) !important; left: calc(100vw - 160px) !important; opacity: 1 !important; transform: rotate(-5deg); }
+        .landed-2 { top: calc(100vh - 125px) !important; left: calc(100vw - 120px) !important; opacity: 1 !important; transform: rotate(5deg) scaleX(-1); }
 
     </style>
 </head>
@@ -90,71 +90,78 @@
             where everything is felt without a word.
         </div>
 
-        <div id="bird1" class="bird">🕊️</div>
-        <div id="bird2" class="bird">🕊️</div>
-
-        <div id="nature-scene">
-            <div class="branch"></div>
-        </div>
-
         <div class="text-layer" id="s3">
             Some moments are best<br>
             when shared in silence.<br>
             <span style="font-size: 1.2rem;">I'm right here with you.</span>
         </div>
+
+        <div id="nature-scene">
+            <svg class="tree-branch" id="branch-svg" viewBox="0 0 200 100">
+                <path d="M200,90 Q150,80 100,85 T0,70" stroke="#1a1108" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <path d="M140,83 Q130,60 110,55" stroke="#1a1108" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <svg id="b1" class="bird-svg" viewBox="0 0 20 20">
+                <path d="M2,10 Q5,5 10,10 Q15,5 18,10 Q15,12 10,11 Q5,12 2,10" />
+            </svg>
+            <svg id="b2" class="bird-svg" viewBox="0 0 20 20">
+                <path d="M2,10 Q5,5 10,10 Q15,5 18,10 Q15,12 10,11 Q5,12 2,10" />
+            </svg>
+        </div>
     </div>
 
     <script>
-        // Full screen wind-blown petals
+        // Petal Whirlpool Spawning
         function spawnPetal() {
             const p = document.createElement('div');
             p.className = 'petal';
-            const size = Math.random() * 10 + 10 + "px";
-            p.style.width = p.style.height = size;
             p.style.left = Math.random() * 100 + "vw";
-            p.style.top = Math.random() * -10 + "vh";
-            p.style.animation = `windFlow ${Math.random() * 5 + 7}s linear forwards`;
+            p.style.top = Math.random() * -20 + "vh";
+            p.style.animationDuration = (Math.random() * 5 + 10) + "s";
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 12000);
         }
-        setInterval(spawnPetal, 200);
+        setInterval(spawnPetal, 250);
 
         const s1 = document.getElementById('s1');
         const s2 = document.getElementById('s2');
         const s3 = document.getElementById('s3');
-        const bird1 = document.getElementById('bird1');
-        const bird2 = document.getElementById('bird2');
-        const nature = document.getElementById('nature-scene');
+        const branch = document.getElementById('branch-svg');
+        const b1 = document.getElementById('b1');
+        const b2 = document.getElementById('b2');
 
         window.onload = () => {
-            // Part 1
-            setTimeout(() => { s1.classList.add('visible'); }, 2000);
+            // Scene 1 Appear
+            setTimeout(() => { s1.classList.add('visible'); }, 1500);
             
-            // Birds begin to fly across screen mid-way
+            // Birds start moving through the background
             setTimeout(() => {
-                bird1.style.left = "40vw"; bird1.style.top = "15%";
-                bird2.style.left = "35vw"; bird2.style.top = "25%";
-            }, 5000);
+                b1.style.opacity = "0.4"; b1.style.left = "50vw"; b1.style.top = "20%";
+                b2.style.opacity = "0.4"; b2.style.left = "45vw"; b2.style.top = "30%";
+            }, 3000);
 
-            // Transition
+            // Clear Scene 1, Background Shift
             setTimeout(() => { 
                 s1.classList.remove('visible');
                 document.body.style.background = "#090a0f"; 
-            }, 9000);
+            }, 8500);
 
-            // Part 2
-            setTimeout(() => { s2.classList.add('visible'); }, 11000);
+            // Scene 2 Appear
+            setTimeout(() => { s2.classList.add('visible'); }, 10500);
 
-            // Final Reveal
+            // Transition to Final Scene (The Landing)
             setTimeout(() => { 
                 s2.classList.remove('visible');
-                nature.style.opacity = "1";
+                branch.style.opacity = "1";
                 
-                // Birds fly to the branch to rest together
-                bird1.classList.add('rest1');
-                bird2.classList.add('rest2');
+                // Birds fly to settle on the branch
+                b1.classList.add('landed-1');
+                b2.classList.add('landed-2');
+                b1.style.fill = "#fff"; b2.style.fill = "#fff"; // Turn white in the moonlight
             }, 18000);
 
+            // Final Message
             setTimeout(() => { s3.classList.add('visible'); }, 22000);
         };
     </script>
