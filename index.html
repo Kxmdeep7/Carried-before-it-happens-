@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For You</title>
+    <title>The Almost</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         
         body { 
-            background: #1b261d; /* Deep Garden Green */
+            background: #1b261d; 
             overflow: hidden; 
             font-family: 'Dancing Script', cursive; 
-            transition: background 6s ease-in-out;
+            transition: background 8s ease-in-out;
         }
 
         #main-container {
@@ -22,123 +22,140 @@
             text-align: center; position: relative;
         }
 
-        /* DENSE PETAL STORM */
-        .nature-layer {
-            position: absolute; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
-        }
-
+        /* WIND-BLOWN PETALS (Full Screen Coverage) */
         .petal {
             position: absolute;
-            background: #f2d5d5; /* Sakura Pink */
+            background: #f2d5d5;
             border-radius: 100% 0 100% 100%;
             opacity: 0.6;
-            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(110vh) translateX(100px) rotate(720deg); opacity: 0; }
+        @keyframes windFlow {
+            0% { transform: translate(-10vw, -10vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translate(110vw, 110vh) rotate(720deg); opacity: 0; }
         }
 
-        /* HANDWRITTEN TEXT REVEAL */
+        /* TEXT STYLING */
         .text-layer {
-            position: absolute; width: 85%;
-            font-size: 1.8rem; 
-            color: #f8f6f2; /* Soft White */
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 2.5s ease-in-out, transform 3s ease-in-out;
-            z-index: 10;
-            line-height: 1.6;
+            position: absolute; width: 85%; font-size: 1.8rem; 
+            color: #f8f6f2; opacity: 0;
+            transition: opacity 2.5s ease-in-out;
+            z-index: 10; line-height: 1.6;
         }
 
-        .visible { opacity: 1 !important; transform: scale(1) !important; }
+        .visible { opacity: 1 !important; }
 
-        #footnote {
-            position: absolute; bottom: 10%; font-size: 1rem;
-            letter-spacing: 2px; color: rgba(255,255,255,0.3);
-            opacity: 0; transition: opacity 3s ease;
+        /* TREE & BIRD STORY */
+        #nature-scene {
+            position: absolute; bottom: 0; width: 100%; height: 300px;
+            z-index: 5; opacity: 0; transition: opacity 4s ease;
         }
+
+        .branch {
+            position: absolute; bottom: 50px; right: -20px;
+            width: 250px; height: 10px; background: #2a1b0a;
+            border-radius: 5px; transform: rotate(-5deg);
+        }
+
+        .bird {
+            position: absolute; font-size: 24px; transition: all 6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 6;
+        }
+
+        #bird1 { top: 20%; left: -50px; }
+        #bird2 { top: 30%; left: -50px; }
+
+        /* Resting positions on branch */
+        .rest1 { top: calc(100vh - 115px) !important; left: calc(100vw - 120px) !important; transform: rotate(0deg); }
+        .rest2 { top: calc(100vh - 115px) !important; left: calc(100vw - 90px) !important; transform: rotate(0deg) scaleX(-1); }
+
     </style>
 </head>
 <body>
 
-    <div class="nature-layer" id="nature-box"></div>
-
     <div id="main-container">
         <div class="text-layer" id="s1">
-            Bas tuasi aa yaad rakhna...<br>
-            You are the only thought in my mind,<br>
-            from morning to the night,<br>
-            in every moment, in every second.
+            As the day winds down,<br>
+            know that you are the only thought in my mind...<br>
+            from morning until the night.
         </div>
 
         <div class="text-layer" id="s2">
             It isn't just about a moment.<br>
-            It's the pull before it...<br>
-            The silence where everything is felt.
+            It is the pull before it...<br>
+            where everything is felt without a word.
+        </div>
+
+        <div id="bird1" class="bird">🕊️</div>
+        <div id="bird2" class="bird">🕊️</div>
+
+        <div id="nature-scene">
+            <div class="branch"></div>
         </div>
 
         <div class="text-layer" id="s3">
-            Some things don’t need to be said<br>
-            to be real.<br>
-            <span style="font-size: 1.3rem; opacity: 0.8;">I'm right here.</span>
+            Some moments are best<br>
+            when shared in silence.<br>
+            <span style="font-size: 1.2rem;">I'm right here with you.</span>
         </div>
-
-        <div id="footnote">Just feel it...</div>
     </div>
 
     <script>
-        // Create 50+ Petals for a "Flower Animation" feel
-        const natureBox = document.getElementById('nature-box');
-        function createPetal() {
+        // Full screen wind-blown petals
+        function spawnPetal() {
             const p = document.createElement('div');
             p.className = 'petal';
-            const size = Math.random() * 15 + 10 + "px";
-            p.style.width = size;
-            p.style.height = size;
+            const size = Math.random() * 10 + 10 + "px";
+            p.style.width = p.style.height = size;
             p.style.left = Math.random() * 100 + "vw";
-            p.style.animationDuration = (Math.random() * 8 + 7) + "s";
-            p.style.backgroundColor = Math.random() > 0.5 ? '#f2d5d5' : '#fff0f3';
-            natureBox.appendChild(p);
-            setTimeout(() => p.remove(), 15000);
+            p.style.top = Math.random() * -10 + "vh";
+            p.style.animation = `windFlow ${Math.random() * 5 + 7}s linear forwards`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 12000);
         }
-        setInterval(createPetal, 300); // High frequency
+        setInterval(spawnPetal, 200);
 
         const s1 = document.getElementById('s1');
         const s2 = document.getElementById('s2');
         const s3 = document.getElementById('s3');
-        const footnote = document.getElementById('footnote');
+        const bird1 = document.getElementById('bird1');
+        const bird2 = document.getElementById('bird2');
+        const nature = document.getElementById('nature-scene');
 
         window.onload = () => {
-            // SLOW PACING: Give her time to breathe
-            
-            // Show Message 1
+            // Part 1
             setTimeout(() => { s1.classList.add('visible'); }, 2000);
             
-            // Transition Background to Midnight halfway through
+            // Birds begin to fly across screen mid-way
+            setTimeout(() => {
+                bird1.style.left = "40vw"; bird1.style.top = "15%";
+                bird2.style.left = "35vw"; bird2.style.top = "25%";
+            }, 5000);
+
+            // Transition
             setTimeout(() => { 
-                document.body.style.background = "#090a0f"; 
                 s1.classList.remove('visible');
+                document.body.style.background = "#090a0f"; 
             }, 9000);
 
-            // Show Message 2
+            // Part 2
             setTimeout(() => { s2.classList.add('visible'); }, 11000);
-            setTimeout(() => { s2.classList.remove('visible'); }, 18000);
 
-            // Show Message 3
-            setTimeout(() => { s3.classList.add('visible'); }, 20000);
-            
-            // Fade text out but KEEP PETALS GOING
+            // Final Reveal
             setTimeout(() => { 
-                s3.classList.remove('visible');
-                setTimeout(() => {
-                    footnote.style.opacity = "1";
-                }, 3000);
-            }, 27000);
+                s2.classList.remove('visible');
+                nature.style.opacity = "1";
+                
+                // Birds fly to the branch to rest together
+                bird1.classList.add('rest1');
+                bird2.classList.add('rest2');
+            }, 18000);
+
+            setTimeout(() => { s3.classList.add('visible'); }, 22000);
         };
     </script>
 </body>
