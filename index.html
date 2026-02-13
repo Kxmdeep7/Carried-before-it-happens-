@@ -7,94 +7,95 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500&display=swap');
 
+        /* FORCE EVERYTHING TO THE CENTER */
         * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
         
-        body { 
-            background: #1b261d; /* Rich Garden Green */
+        body, html { 
+            height: 100%; width: 100%;
+            background: #1b261d; 
             overflow: hidden; 
             font-family: 'Dancing Script', cursive; 
-            transition: background 5s ease-in-out;
+            display: flex; justify-content: center; align-items: center;
         }
 
         #main-container {
-            height: 100vh; width: 100vw;
+            width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
-            text-align: center; position: relative;
+            position: relative;
         }
 
-        /* TEXT POSITIONING - LOCKED TO CENTER */
+        /* FIXED TEXT - NO MORE GOING UP */
         .text-layer {
-            position: absolute; 
+            position: absolute;
             width: 85%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%); /* Mathematical Center */
-            font-size: 2.2rem; 
+            text-align: center;
+            font-size: 2rem; 
             color: #fdfaf5; 
             opacity: 0;
             transition: opacity 2s ease-in-out;
-            z-index: 20; 
+            z-index: 50; 
             line-height: 1.6;
             visibility: hidden;
+            pointer-events: none;
         }
         .visible { opacity: 1 !important; visibility: visible !important; }
 
-        /* VIBRANT NATURE ELEMENTS */
+        /* FULL SCREEN PETALS */
         .petal, .leaf {
             position: absolute; opacity: 0; pointer-events: none; z-index: 5;
+            top: -20px;
         }
         .petal {
-            width: 14px; height: 14px; background: #ff8fa3;
+            width: 12px; height: 12px; background: #ff8fa3;
             border-radius: 100% 0 100% 100%;
-            box-shadow: 0 0 12px rgba(255, 143, 163, 0.8);
+            box-shadow: 0 0 8px rgba(255, 143, 163, 0.8);
         }
         .leaf {
-            width: 16px; height: 10px; background: #4a6d4a;
+            width: 14px; height: 10px; background: #4a6d4a;
             border-radius: 0 100% 0 100%;
         }
 
         @keyframes shower {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
             20% { opacity: 0.9; }
-            100% { transform: translateY(110vh) translateX(80px) rotate(720deg); opacity: 0; }
+            100% { transform: translateY(105vh) translateX(50px) rotate(720deg); opacity: 0; }
         }
 
-        /* SUNSET BACKGROUND STUFF */
-        .sunset-bg {
+        /* SUNSET LAYER */
+        #sunset-bg {
             position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, #2c3e50 0%, #fd746c 100%);
             opacity: 0;
-            transition: opacity 8s ease-in-out;
+            transition: opacity 6s ease-in-out;
             z-index: 1;
         }
 
-        /* THE FINAL SCENE */
+        /* THE BIRD SCENE */
         #nature-scene {
             position: absolute; width: 100%; height: 100%;
             pointer-events: none; z-index: 10;
         }
         .branch-svg {
-            position: absolute; bottom: 12%; right: -10px;
-            width: 320px; opacity: 0; transition: opacity 4s ease;
+            position: absolute; bottom: 10%; right: 0;
+            width: 300px; opacity: 0; transition: opacity 4s ease;
         }
         .bird-svg {
-            position: absolute; width: 48px; fill: #fff; opacity: 0;
+            position: absolute; width: 45px; fill: #fff; opacity: 0;
             transition: all 8s cubic-bezier(0.2, 1, 0.3, 1);
             filter: drop-shadow(0 0 10px white);
         }
 
-        /* Landing points */
         #b1 { top: -10%; left: -10%; }
         #b2 { bottom: -10%; left: 110%; }
-        .landed-1 { top: calc(88% - 135px) !important; left: calc(100% - 190px) !important; opacity: 1 !important; }
-        .landed-2 { top: calc(88% - 140px) !important; left: calc(100% - 145px) !important; opacity: 1 !important; transform: scaleX(-1); }
+        .landed-1 { top: calc(90% - 130px) !important; left: calc(100% - 170px) !important; opacity: 1 !important; }
+        .landed-2 { top: calc(90% - 135px) !important; left: calc(100% - 130px) !important; opacity: 1 !important; transform: scaleX(-1); }
 
     </style>
 </head>
 <body>
 
-    <div class="sunset-bg" id="sunset"></div>
+    <div id="sunset-bg"></div>
 
     <div id="main-container">
         <div class="text-layer" id="p1">
@@ -123,48 +124,45 @@
     </div>
 
     <script>
-        let showerInterval;
-        function startShower() {
-            showerInterval = setInterval(() => {
-                const p = document.createElement('div');
-                p.className = Math.random() > 0.4 ? 'petal' : 'leaf';
-                p.style.left = Math.random() * 100 + "vw";
-                p.style.animation = `shower ${Math.random() * 5 + 7}s linear forwards`;
-                document.body.appendChild(p);
-                setTimeout(() => p.remove(), 12000);
-            }, 300);
+        function spawnPetal() {
+            const p = document.createElement('div');
+            p.className = Math.random() > 0.4 ? 'petal' : 'leaf';
+            p.style.left = Math.random() * 100 + "vw";
+            p.style.animation = `shower ${Math.random() * 5 + 6}s linear forwards`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 11000);
         }
 
         window.onload = () => {
             const p1 = document.getElementById('p1');
             const p2 = document.getElementById('p2');
-            const sunset = document.getElementById('sunset');
+            const sunset = document.getElementById('sunset-bg');
             const branch = document.getElementById('branch');
             const b1 = document.getElementById('b1');
             const b2 = document.getElementById('b2');
 
-            // 1. First Text
+            // 1. Text first
             setTimeout(() => { p1.classList.add('visible'); }, 1500);
 
-            // 2. Petals start
-            setTimeout(() => { startShower(); }, 3000);
+            // 2. Start petals (Everywhere)
+            setTimeout(() => { setInterval(spawnPetal, 300); }, 3000);
 
-            // 3. Smooth Transition to Sunset
+            // 3. Page 1 out, Sunset in
             setTimeout(() => {
                 p1.classList.remove('visible');
                 sunset.style.opacity = "1";
-            }, 8500);
+            }, 8000);
 
-            // 4. Second Text on Sunset
-            setTimeout(() => { p2.classList.add('visible'); }, 11000);
+            // 4. Page 2 text
+            setTimeout(() => { p2.classList.add('visible'); }, 10000);
 
-            // 5. Fade into Midnight & Show Birds
+            // 5. Final Scene: Sunset fades to dark
             setTimeout(() => {
                 p2.classList.remove('visible');
                 sunset.style.transition = "opacity 6s ease-in-out";
                 sunset.style.opacity = "0";
-                document.body.style.background = "#05070a"; /* Midnight Blue/Black */
-            }, 19000);
+                document.body.style.background = "#05070a";
+            }, 18000);
 
             setTimeout(() => {
                 branch.style.opacity = "1";
